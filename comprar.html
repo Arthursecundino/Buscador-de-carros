@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Loja de Veículos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="cabecalho">
+        <div class="logo">
+    <a href="/" style="text-decoration:none; color:inherit;">
+        Loja de Veículos
+    </a>
+</div>
+        <nav>
+            <ul class="menu-navegacao">
+                
+                <li><a href="/comprar">Comprar</a></li>
+                <li><a href="/cadastro">Cadastre-se</a></li>
+                <li><a href="#">Dúvidas</a></li>
+                {% if session.usuario_id %}
+                    <li><span style="color:#28a745; font-weight:bold;">Olá, {{ session.usuario_nome }}</span></li>
+                    <li><a href="/logout" class="botao-entrar">Sair</a></li>
+                {% else %}
+                    <li><a href="/login" class="botao-entrar">Login</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Mensagens flash (sucesso/erro) -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div style="background:#d4edda; color:#155724; padding:10px 20px; text-align:center; border-bottom:1px solid #c3e6cb;">
+                {% for msg in messages %}
+                    <p style="margin:0;">{{ msg }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <section class="carrossel">
+        <div class="slides">
+            <img src="{{ url_for('static', filename='imagens/carro1.jpg') }}" alt="Carro 1">
+            <img src="{{ url_for('static', filename='imagens/carro2.jpg') }}" alt="Carro 2">
+            <img src="{{ url_for('static', filename='imagens/moto.jpg') }}" alt="Moto">
+        </div>
+        <h3>Destaques do dia — Aproveite Carros e Motos Seminovos!</h3>
+    </section>
+
+    <!-- BUSCADOR — campos alinhados com as colunas reais do banco -->
+    <section class="buscador" style="background-color:#f9f9f9; padding:20px; border-radius:8px; margin:20px auto; max-width:650px;">
+        <h2 style="text-align:center;">🔎 Pesquise seu veículo</h2>
+        <form action="/buscar" method="GET">
+
+            <label for="marca">Marca:</label>
+            <input type="text" id="marca" name="marca" placeholder="Ex: Fiat, Honda"
+                   value="{{ request.args.get('marca', '') }}"
+                   style="width:100%; padding:8px; margin:5px 0 12px; border:1px solid #ccc; border-radius:4px; box-sizing:border-box;"><br>
+
+            <label for="modelo">Modelo:</label>
+            <input type="text" id="modelo" name="modelo" placeholder="Ex: Uno, Civic"
+                   value="{{ request.args.get('modelo', '') }}"
+                   style="width:100%; padding:8px; margin:5px 0 12px; border:1px solid #ccc; border-radius:4px; box-sizing:border-box;"><br>
+
+            <label for="cor">Cor:</label>
+            <input type="text" id="cor" name="cor" placeholder="Ex: Prata, Preto"
+                   value="{{ request.args.get('cor', '') }}"
+                   style="width:100%; padding:8px; margin:5px 0 12px; border:1px solid #ccc; border-radius:4px; box-sizing:border-box;"><br>
+
+            <label for="cidade">Cidade:</label>
+            <input type="text" id="cidade" name="cidade" placeholder="Ex: Recife, Olinda"
+                   value="{{ request.args.get('cidade', '') }}"
+                   style="width:100%; padding:8px; margin:5px 0 12px; border:1px solid #ccc; border-radius:4px; box-sizing:border-box;"><br>
+
+            <label for="estado">Estado:</label>
+            <select id="estado" name="estado"
+                    style="width:100%; padding:8px; margin:5px 0 12px; border:1px solid #ccc; border-radius:4px; box-sizing:border-box;">
+                <option value="">Todos</option>
+                <option value="PE" {% if request.args.get('estado') == 'PE' %}selected{% endif %}>Pernambuco</option>
+                <option value="PB" {% if request.args.get('estado') == 'PB' %}selected{% endif %}>Paraíba</option>
+                <option value="SE" {% if request.args.get('estado') == 'SE' %}selected{% endif %}>Sergipe</option>
+                <option value="CE" {% if request.args.get('estado') == 'CE' %}selected{% endif %}>Ceará</option>
+            </select><br>
+
+            <label for="valor_max">Valor máximo (R$):</label>
+            <input type="number" id="valor_max" name="valor_max" placeholder="Ex: 50000"
+                   value="{{ request.args.get('valor_max', '') }}"
+                   style="width:100%; padding:8px; margin:5px 0 12px; border:1px solid #ccc; border-radius:4px; box-sizing:border-box;"><br>
+
+            <button type="submit" style="background-color:#007bff; color:white; padding:10px 20px; border:none; border-radius:4px; cursor:pointer; width:100%; font-size:16px;">
+                Buscar
+            </button>
+        </form>
+
+        <!-- RESULTADOS -->
+
+        <!-- Aviso de fonte web — aparece sempre que a busca veio da internet -->
+        {% if busca_feita and fonte == 'web' %}
+            <div style="background:#fff3cd; color:#856404; padding:12px 15px; border-radius:6px; margin-top:20px; font-size:14px; border-left:4px solid #ffc107;">
+                🌐 Nenhum veículo encontrado no nosso banco de dados — os resultados abaixo foram buscados automaticamente na internet.
+            </div>
+        {% endif %}
+
+        {% if veiculos %}
+            <div style="margin-top:20px; text-align:center;">
+                <h3 style="color:#333; margin-bottom:20px;">🎉 Veículos Encontrados:</h3>
+                <div style="display:flex; gap:20px; justify-content:center; flex-wrap:wrap;">
+                {% for veiculo in veiculos %}
+                    <div style="border:1px solid #ddd; padding:15px; border-radius:8px; background:#fff; width:220px; box-shadow:0 4px 6px rgba(0,0,0,0.05); text-align:left;">
+                        <h4 style="margin:0 0 10px 0; color:#007bff;">{{ veiculo.marca }} {{ veiculo.modelo }}</h4>
+                        <p style="margin:5px 0;"><strong>Cor:</strong> {{ veiculo.cor or 'N/A' }}</p>
+                        <p style="margin:5px 0;"><strong>Cidade:</strong> {{ veiculo.cidade or 'N/A' }}</p>
+                        <p style="margin:5px 0;"><strong>Estado:</strong> {{ veiculo.estado or 'N/A' }}</p>
+                        <p style="color:#27ae60; font-weight:bold; font-size:18px; margin:10px 0 0 0;">
+                            R$ {{ veiculo.valor_estimado }}
+                        </p>
+
+                        {% set tel = veiculo.telefone if veiculo.telefone is defined else veiculo.get('telefone') %}
+                        {% if tel and tel != 'Não informado' %}
+                            <p style="margin:8px 0 4px 0; font-size:13px;"><strong>📞 Telefone:</strong> {{ tel }}</p>
+                            {# Monta link WhatsApp limpando tudo que não é número #}
+                            {% set tel_limpo = tel | replace('(','') | replace(')','') | replace(' ','') | replace('-','') %}
+                            <a href="https://wa.me/55{{ tel_limpo }}" target="_blank" rel="noopener noreferrer"
+                               style="display:block; margin-top:6px; text-align:center; background:#25D366; color:#fff; padding:8px; border-radius:4px; font-weight:bold; text-decoration:none; font-size:13px;">
+                               💬 Chamar no WhatsApp
+                            </a>
+                        {% endif %}
+
+                        {% if veiculo.get('link') %}
+                            <a href="{{ veiculo.link }}" target="_blank" rel="noopener noreferrer"
+                               style="display:block; margin-top:8px; text-align:center; background:#007bff; color:#fff; padding:8px; border-radius:4px; font-weight:bold; text-decoration:none; font-size:13px;">
+                               🔗 Ver anúncio
+                            </a>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+        {% elif busca_feita %}
+            <div style="text-align:center; margin-top:20px; padding:15px; background-color:#f8d7da; color:#721c24; border-radius:5px;">
+                ⚠️ Nenhum veículo encontrado com os filtros selecionados.
+            </div>
+        {% endif %}
+    </section>
+
+    <h2 style="text-align:center;">Buscador de Carros e Motos</h2>
+</body>
+</html>
