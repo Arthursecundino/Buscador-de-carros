@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Seu Caranguu</title>
+
+    <!-- Importa o CSS externo -->
+   <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+{% if session.usuario_nome %}
+    <div style="
+        background-color: #d4edda;
+        color: #155724;
+        padding: 15px;
+        margin: 10px;
+        border-radius: 10px;
+        font-size: 22px;
+        font-weight: bold;
+        text-align: center;
+    ">
+        Olá, {{ session.usuario_nome }} 👋
+    </div>
+{% endif %}
+
+
+
+    <!-- Cabeçalho -->
+    <header class="cabecalho">
+        <div class="logo">
+            <span>Seu Caranguu</span>
+        </div>
+        <nav>
+            <ul class="menu-navegacao">
+              
+                <li><a href="/comprar">Comprar</a></li>
+                
+<a href="/cadastro">Cadastre-se</a>
+<a href="/faq">Dúvidas</a>
+{% if session.usuario_nome %}
+    <a href="/logout">Sair</a>
+{% else %}
+    <a href="/login">Login</a>
+{% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Carrossel de imagem-->     
+    <section class="carrossel">
+        <div class="slides">
+            <img src="imagens/carro1.jpg" alt="Carro 1">
+            <img src="imagens/carro2.jpg" alt="Carro 2">
+            <img src="imagens/moto.jpg" alt="Moto">
+        </div>
+        <h3>Destaques do dia Aproveite Carros e Motos Seminovos!</h3>
+        <!-- Botões de navegação, botões(prev e next) aparecem sobre o carrossel e permitem avançar ou voltar -->
+        <button class="prev">&#10094;</button>
+        <button class="next">&#10095;</button>
+                            
+    </section>
+
+    <!-- Conteúdo principal, área principal do site, onde fica o conteúdo mais relevante para o usuário-->
+    <main style="padding: 10px;"> <!--Onde o conteúdo principal começa-->
+        <!-- formulário de busca,(section-para dividir o conteúdo da página em seções organizadas ex:contato/endereço) -->
+        <section style="background-color:#f9f9f9; padding:10px; border-radius:8px; margin-top:10px;">
+            <h2 style="text-align:center;">🔎 Pesquise seu veículo</h2><!--titulo h2-->
+        <form id="formBusca" action="#" method="GET"><!-- formulário de busca -->
+            <label for="tipo">Tipo:</label>
+            <!--menu suspenso de opções para escolher entre carro ou moto(cria a caixa de seleção)-->
+            <select id="tipo" name="tipo"> <!--identifica o elemento no JavaScript/CSS,nome enviado em formulários-->
+            <option value="carro">Carro</option><!--cada item da lista-->
+            <option value="moto">Moto</option>
+            </select>
+
+            <label for="marca">Marca:</label><!--nome/descrição de um campo de formulário-->
+            <input type="text" id="marca" name="marca" placeholder="Ex: Honda, Fiat">
+
+            <label for="modelo">Modelo:</label>
+            <input type="text" id="modelo" name="modelo" placeholder="Ex: Civic, Strada">
+
+            <label for="ano">Ano:</label>
+            <input type="number" id="ano" name="ano" min="1980" max="2026">
+
+            <label for="valor_max">Valor máximo:</label>
+            <input type="number" id="valor_max" name="valor_max" placeholder="Ex: 80000">
+
+            <label for="estado">Estado:</label>
+            <select id="estado" name="estado">
+            <option>Pernambuco</option>
+            <option>Paraiba</option>
+            <option>Sergipe</option>
+            <option>Ceará</option>
+            </select>
+
+            <button type="submit">Buscar</button>
+        </form>
+        <br>
+        <!--Titulo de informações ao usuário texto e linkar tela de cadastro receber no whatsapp-->
+        <h2 style="text-align:center;">Buscador de Carros e Motos</h2>
+        <p>Receba em primeira mão as melhores oportunidades de leilão e ofertas exclusivas de carros e motos. A <strong>Loja de Veículos</strong> nasceu com o objetivo de conectar pessoas às melhores oportunidades
+        de compra e venda de carros e motos. Trabalhamos com transparência e dedicação para oferecer ofertas exclusivas de leilão e veículos seminovos. Nosso compromisso é garantir que você receba informações confiáveis, suporte personalizado
+        e acesso às melhores condições do mercado.</p>        
+        <p>🚀<strong>Não perca as grandes oportunidades!</strong> Quer receber avisos de veículos de leilão no Whatsapp? <a href="/cadastro_whatsapp">Clique Aqui</a></p>
+        
+        </section>  
+        
+        <!--Vitrine destaques da semana carros e motos criado outra section -->
+        <section class="vitrine">
+            <h2 class="titulo-sessao">Destaques da Semana do Leilão</h2>
+
+            <div class="container-cards">
+            
+            <article class="card-veiculo">
+                <img src="Imagens/hondacivic.jpg" alt="honda civic">
+                <div class="detalhes">
+                    <h3>Honda Civic 2022</h3>
+                    <p>1.8 Automático • Flex • 30.000km</p>
+                    <div class="preco">R$ 135.000</div>
+<a href="/honda_civic" class="botao-ver">
+                </div>
+            </article>
+
+            <article class="card-veiculo">
+                <div class="tag-oferta">Relíquia</div>
+                <img src="/imagens/fusca.jpg" alt="fusca">
+                <div class="detalhes">
+                    <h3>VW Fusca 1985</h3>
+                    <p>1.6 • Manual • 67.000km</p>
+                    <div class="preco">R$ 32.900</div>
+                    <a href="/fusca" class="botao-ver">Ver Detalhes</a>
+                </div>
+            </article>
+
+            <article class="card-veiculo">
+                <img src="/imagens/gol.jpg" alt="gol">
+                <div class="detalhes">
+                    <h3>Gol Quadrado 1977</h3>
+                    <p>1.0 • Manual • 28.000km</p>
+                    <div class="preco">R$ 35.000</div>
+                    <a href="/gol" class="botao-ver">Ver Detalhes</a>
+                </div>
+            </article>
+
+            </div>
+        </section>
+        
+    </main>
+
+    <!-- O que dizem nossos clientes
+    <blockquote>: Indica ao navegador e aos buscadores que aquele texto é uma citação direta de alguém.
+    <cite>: Define a autoria da citação
+    figure / figcaption: Mantêm a foto e o nome do autor unidos semanticamente ao texto do depoimento.
+    -->
+    <section class="testimonials">
+        <h2 style="text-align:center;">O que dizem nossos clientes</h2>
+        
+        <div class="testimonial-container">
+            <!-- Card 1 -->
+            <figure class="testimonial-card">
+            <blockquote>
+                "Encontrei o carro dos meus sonhos e o processo de leilão foi muito transparente!"
+            </blockquote>
+            <figcaption>
+                <img src="Imagens/cliente_1.jpg" alt="Foto do Cliente 1">
+                <cite>
+                <strong>Ana Silva</strong> <br>
+                CEO da TechInovação
+                </cite>
+            </figcaption>
+            </figure>
+
+            <!-- Card 2 -->
+            <figure class="testimonial-card">
+            <blockquote>
+                "O suporte pelo WhatsApp me ajudou a escolher a moto ideal para o meu dia a dia."            </blockquote>
+            <figcaption>
+                <img src="Imagens/cliente_2.jpg" alt="Foto do Cliente 2">
+                <cite>
+                <strong>Laila Oliveira</strong> <br>
+                Gerente de Projetos
+                </cite>
+            </figcaption>
+            </figure>
+            
+            <!-- Card 3 -->
+            <figure class="testimonial-card">
+            <blockquote>
+                "Estou simplesmente apaixonado(a) pelo produto! A qualidade é incrível e a entrega foi super rápida. Com certeza comprarei novamente"
+            </blockquote>
+            <figcaption>
+                <img src="Imagens/cliente_3.jpg" alt="Foto do Cliente 1">
+                <cite>
+                <strong>Maria Silva</strong> <br>
+                Colaboradora do RH
+                </cite>
+            </figcaption>
+            </figure>
+        </div>
+    </section><br><br>
+
+    <!-- Informações úteis -->
+    <section class="informacoes-uteis">
+        <h2 style="text-align:center;">📊 Informações Úteis</h2>
+        <div class="container-infos">
+
+            <!-- Horário de funcionamento -->
+            <div class="horarios">
+                <h3>🕒 Horário de atendimento</h3><br><br>
+                <p>Segunda a Sexta: 8h - 18h<br><br>
+                Sábado: 8h - 12h<br><br>
+                Domingo: fechado</p>
+            </div>
+
+            <!-- Mapa de localização -->
+            <div class="mapa">
+                <h3>📍 Onde estamos</h3>
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3949.123456789!2d-34.901112!3d-8.047562!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7ab123456789abcd%3A0x123456789abcdef!2sRecife%20PE!5e0!3m2!1spt-BR!2sbr!4v1681234567890"
+                    width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy">
+                </iframe>
+            </div>        
+        </div>
+    </section>
+    
+    <!--SEÇÃO DE CONSULTAS EXTERNAS (FIPE E DETRAN)-->
+    <section class="consultas-externas">
+    <h3>🛠️ Ferramentas de Consulta</h3>
+    <p>Antes de fechar negócio, consulte os órgãos oficiais:</p>
+    
+    <div class="botoes-consulta">
+        <a href="https://veiculos.fipe.org.br/" target="_blank" class="btn-fipe">
+            📊 Consultar Tabela FIPE
+        </a>
+
+        <a href="https://www.detran.pe.gov.br/" target="_blank" class="btn-detran">
+            🚗 Consultar Placa (DETRAN)
+        </a>
+    </div>
+    </section>    
+
+    <!-- Dicas e Novidades-->
+        <section class="sessao-blog-completa">
+        <h2 class="titulo-sessao-blog">Dicas e Novidades</h2>
+        
+        <div class="grade-cards">
+            <article class="card-artigo">
+                <img src="Imagens/carro_dicas.jpg" alt="Dicas seminovos">
+                <div class="corpo-card">
+                    <h3>5 itens para revisar antes de comprar um seminovo</h3>
+                    <p>Não seja pego de surpresa! Saiba o que olhar no motor e na documentação antes de fechar negócio.</p>
+                   <a href="/artigo1">>Ler mais</a>
+                </div>
+            </article>
+
+            <article class="card-artigo">
+                <img src="Imagens/leilao.jpg" alt="Financiamento leilão">
+                <div class="corpo-card">
+                    <h3>Como funciona o financiamento de leilão?</h3>
+                    <p>Tire suas dúvidas sobre prazos, taxas e como garantir seu veículo de leilão.</p>
+                    <a href="/artigo2">>Ler mais</a>
+                </div>
+            </article>
+        </div>
+
+        <!--Receba ofertas exclusivas-->
+        <!--Formspree>utilizado permite receber envios de formulários HTML diretamente no seu e-mail ou painel, 
+        sem precisar configurar um servidor próprio-->
+        <!--https://formspree.io/ logar usuario/senha-verificar recebidos por e-mail-->
+        <div class="sessao-newsletter">
+        <h3>Receba ofertas exclusivas</h3>
+        <p>Cadastre seu e-mail e seja o primeiro a saber dos novos lotes.</p>
+        
+        <form class="formulario-newsletter" action="https://formspree.io/f/mnjrdwgb" method="POST">
+            
+            <input type="email" name="email" placeholder="Seu melhor e-mail" required>
+            
+            <button type="submit">Cadastrar</button>
+        </form>
+        </div>
+
+       </section>
+
+
+    <!-- Rodapé -->
+    <footer style="background-color:#f1f1f1; text-align:center; padding:20px; font-size:14px; color:#333;">
+    <p>&copy; 2026 Loja de Veículos - CNPJ: 30.887.854/0001-00</p>
+    <p>📍 Recife - PE | 📞 (81) 99999-0000 | ✉️ contato@lojadeveiculos.com</p>
+    <p>
+        <a href="https://facebook.com" target="_blank">Facebook</a> |
+        <a href="https://instagram.com" target="_blank">Instagram</a> |
+        <a href="https://wa.me/5581999990000" target="_blank">WhatsApp</a>
+    </p>
+    </footer>
+    <!----- BOTÃO DO WHATSAPP ----->
+    <a href="https://wa.me/5581999990000" class="whatsapp-fixo" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="35">
+    </a>
+<!--pesquisa de veiculo no google com JS Campos marca/tipo/modelo/ano-->
+    <script>
+        const formulario = document.getElementById('formBusca');
+
+        formulario.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const tipoSelected = document.getElementById('tipo').value;
+            const marcaDigitada = document.getElementById('marca').value.trim();
+            const modeloDigitado = document.getElementById('modelo').value.trim();
+            const anoDigitado = document.getElementById('ano').value;
+            const valorMaxDigitado = document.getElementById('valor_max').value;
+            const estadoSelected = document.getElementById('estado').value;
+
+            let partesBusca = [];
+            if (tipoSelected) partesBusca.push(tipoSelected);
+            if (marcaDigitada) partesBusca.push(marcaDigitada);
+            if (modeloDigitado) partesBusca.push(modeloDigitado);
+            if (anoDigitado) partesBusca.push(anoDigitado);
+            
+            if (valorMaxDigitado) {
+                partesBusca.push(`ate ${valorMaxDigitado}`);
+            }
+            
+            if (estadoSelected) partesBusca.push(estadoSelected);
+
+            const termoBusca = partesBusca.join(' ');
+            const urlGoogle = "https://www.google.com/search?q=" + encodeURIComponent(termoBusca);
+            window.open(urlGoogle, '_blank');
+        });
+    </script>
+
+</body>
+</html>
