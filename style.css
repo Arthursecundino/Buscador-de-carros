@@ -1,0 +1,537 @@
+/* ===== Reset básico ===== */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* ===== Cabeçalho ===== */
+.cabecalho {
+    background-color: #0d233b;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 5%;
+    color: white;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.logo span {
+    color: #f6f8f5;
+}
+
+/* ===== Menu de navegação ===== */
+.menu-navegacao {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+.menu-navegacao li {
+    margin-left: 20px;
+}
+
+.menu-navegacao a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* ===== Botão de login ===== */
+.botao-entrar {
+    background-color: #99ff66;
+    color: #0d233b !important;
+    padding: 8px 20px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+}
+
+/* ===== Carrossel ===== */
+.carrossel {
+    position: relative; /* necessário para posicionar os botões */
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.carrossel .slides {
+    display: flex;
+    animation: deslizar 13s infinite; /* tempo de segundos das imagens */
+}
+
+.carrossel img {
+    width: 100%;
+    max-width: 300px; /* largura máxima da imagem */
+    height: auto;
+    flex-shrink: 0;
+    margin: 0 auto;
+}
+.carrossel h3{
+    text-align: center;
+}
+
+/* ===== Botões de navegação do carrossel ===== */
+.carrossel button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0,0,0,0.5); /* fundo semi-transparente */
+    color: white;
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    border-radius: 50%;
+    font-size: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.carrossel .prev {
+    left: 10px;
+}
+
+.carrossel .next {
+    right: 10px;
+}
+
+/* Efeito ao passar o mouse nos botões */
+.carrossel button:hover {
+    background-color: rgba(0,0,0,0.8);
+    transform: translateY(-50%) scale(1.1); /* aumenta levemente */
+}
+
+/* ===== Animação do carrossel ===== */
+/* Faz as imagens se moverem automaticamente para o lado */
+@keyframes deslizar {
+    0% { transform: translateX(0); }
+    33% { transform: translateX(-100%); }
+    66% { transform: translateX(-200%); }
+    100% { transform: translateX(0); }
+}
+
+/* ===== Responsividade ===== */
+/* Ajusta imagens para celulares e tablets */
+@media (max-width: 600px) {
+    .carrossel img {
+        max-width: 100%;
+    }
+}
+
+
+/* Estilo da Seção de Cards */
+.titulo-sessao {
+    text-align: center;
+    margin: 40px 0 20px;
+    font-size: 28px;
+    color: #333;
+}
+
+.container-cards {
+    display: flex;
+    flex-wrap: wrap; /* Faz os cards irem para baixo se não couberem na tela */
+    gap: 25px; /* Espaço entre os cards */
+    justify-content: center; /* Centraliza os cards */
+    padding: 20px;
+}
+
+.card-veiculo {
+    background: #fff;
+    width: 300px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Sombra suave */
+    overflow: hidden;
+    transition: transform 0.3s ease; /* Animação ao passar o rato */
+    position: relative;
+    border: 1px solid #eee;
+}
+
+.card-veiculo:hover {
+    transform: translateY(-8px); /* Card "sobe" quando passas o rato */
+}
+
+/* Imagem do Card */
+.card-veiculo img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover; /* Ajusta a imagem sem distorcer */
+}
+
+/* Conteúdo de Texto */
+.detalhes {
+    padding: 20px;
+}
+
+.detalhes h3 {
+    margin: 0 0 10px;
+    font-size: 20px;
+}
+
+.detalhes p {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.preco {
+    font-size: 24px;
+    font-weight: bold;
+    color: #27ae60; /* Cor verde para o preço */
+    margin-bottom: 15px;
+}
+
+.botao-ver {
+    display: block;
+    text-align: center;
+    background: #333;
+    color: #fff;
+    padding: 12px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.botao-ver:hover {
+    background: #e74c3c; /* Muda para vermelho ao passar o rato */
+}
+
+/* Pequena etiqueta de oferta */
+.tag-oferta {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: #f1c40f;
+    padding: 5px 12px;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 5px;
+    z-index: 1;
+}
+
+.testimonial-container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap; /* Para quebrar linha no celular */
+  justify-content: center;
+}
+/* ==========================================================================
+   SEÇÃO DE DEPOIMENTOS
+   ========================================================================== */
+/* Estilização do Título Principal */
+/* Botão do Card */
+/* Estilo do card (o retângulo que envolve o depoimento) */
+.testimonial-card {
+  background: #f9f9f9;           /* Define uma cor de fundo cinza bem claro */
+  border-radius: 8px;            /* Arredonda os cantos do card */
+  padding: 20px;                 /* Cria um espaço interno para o texto não encostar nas bordas */
+  max-width: 300px;              /* Define a largura máxima (evita que o card fique largo demais em telas grandes) */
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Cria uma sombra suave (0 horizontal, 4px vertical, 6px de desfoque) */
+  margin: 0;                     /* Remove as margens que a tag <figure> traz por padrão no navegador */
+}
+
+/* Estilo do texto da citação (o depoimento em si) */
+.testimonial-card blockquote {
+  font-style: italic;            /* Deixa o texto em itálico para destacar que é uma fala */
+  color: #555;                   /* Define um cinza médio (menos cansativo para os olhos que o preto puro) */
+  margin-bottom: 15px;           /* Empurra a foto/nome para baixo, criando um respiro */
+}
+
+/* Estilo da foto do cliente */
+.testimonial-card img {
+  width: 50px;                   /* Define uma largura fixa */
+  height: 50px;                  /* Define uma altura fixa igual à largura */
+  border-radius: 50%;            /* O truque mágico: 50% de raio em um quadrado perfeito torna a imagem um círculo */
+  object-fit: cover;             /* Garante que a imagem preencha o círculo sem ficar esticada ou achatada */
+  margin-right: 10px;            /* Afasta o texto que vem à direita da imagem */
+}
+
+/* Alinhamento do autor (Foto + Nome/Cargo) */
+.testimonial-card figcaption {
+  display: flex;                 /* Ativa o Flexbox para colocar os itens lado a lado */
+  align-items: center;           /* Alinha a foto e o nome verticalmente pelo centro */
+}
+
+/*Informações úteis e Mapa de localização*/
+
+/*.informacoes-uteis: define o estilo geral da seção.
+.container-infos: organiza os blocos (Mapa e Horários) lado a lado.
+.container-infos > div: estiliza cada bloco individualmente.
+.horarios: centraliza o texto do horário de atendimento.
+@media: garante responsividade, empilhando os blocos no celular. */
+.informacoes-uteis {
+    background-color: #f9f9f9; /* Cor de fundo clara para destacar a seção */
+    padding: 20px;            /* Espaçamento interno para dar “respiro” */
+    border-radius: 8px;       /* Bordas arredondadas para suavizar o visual */
+    margin: 20px auto;        /* Espaço externo e centralização horizontal */
+}
+
+.container-infos {
+    display: flex;            /* Coloca os blocos lado a lado */
+    flex-wrap: wrap;          /* Permite que quebrem linha em telas pequenas */
+    justify-content: space-around; /* Distribui os blocos com espaço entre eles */
+    gap: 20px;                /* Espaço entre os blocos */
+}
+
+.container-infos > div {
+    flex: 1 1 300px;          /* Cada bloco ocupa espaço proporcional, mínimo 300px */
+    background-color: #fff;   /* Fundo branco para contraste */
+    padding: 15px;            /* Espaçamento interno */
+    border-radius: 8px;       /* Bordas arredondadas */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* Sombra leve para destacar os blocos */
+}
+
+.horarios {
+    text-align: center;       /* Centraliza todo o texto dentro do bloco de horários */
+}
+
+@media (max-width: 768px) {
+    .container-infos {
+        flex-direction: column; /* Em telas pequenas, empilha os blocos */
+        align-items: center;    /* Centraliza os blocos na vertical */
+    }
+}
+
+/* --- BOTÃO FLUTUANTE DO WHATSAPP --- */
+.whatsapp-fixo {
+    /* Define que o botão não rola com a página; ele fica "colado" na tela */
+    position: fixed;        
+    
+    /* Posicionamento: 30 pixels de distância da borda inferior e da direita */
+    bottom: 30px;           
+    right: 30px;            
+    
+    /* Tamanho do botão (largura e altura iguais para ser um círculo perfeito) */
+    width: 60px;
+    height: 60px;
+    
+    /* Cor de fundo oficial do WhatsApp (Verde) */
+    background-color: #25d366; 
+    
+    /* Arredonda as bordas em 50%, transformando o quadrado em um círculo */
+    border-radius: 50%;     
+    
+    /* Flexbox: usado aqui para centralizar o ícone (imagem) exatamente no meio do botão */
+    display: flex;
+    align-items: center;    /* Centraliza verticalmente */
+    justify-content: center; /* Centraliza horizontalmente */
+    
+    /* Adiciona uma sombra suave para dar profundidade (efeito 3D) */
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+    
+    /* Camada visual: garante que o botão fique na frente de qualquer outro elemento do site */
+    z-index: 9999;          
+    
+    /* Suaviza a transição de qualquer mudança (como o aumento de tamanho no hover) */
+    transition: transform 0.3s ease; 
+}
+
+/* Efeito quando o usuário passa o mouse (ou o dedo no celular) sobre o botão */
+.whatsapp-fixo:hover {
+    /* Aumenta o tamanho do botão em 10% (escala 1.1) */
+    transform: scale(1.1);  
+    
+    /* Escurece levemente o verde para indicar interatividade */
+    background-color: #128c7e; 
+}
+
+/* Ajuste para a imagem dentro do botão */
+.whatsapp-fixo img {
+    /* Garante que o ícone interno não ultrapasse o tamanho do botão */
+    width: 35px;
+    height: auto;
+}
+/* ============================================================
+   SEÇÃO DE CONSULTAS EXTERNAS (FIPE E DETRAN)
+   Esta seção estiliza o bloco de transparência onde o usuário
+   pode verificar preços oficiais e situação de placas.
+   ============================================================ */
+
+.consultas-externas {
+    background-color: #ffffff;    /* Fundo branco para destacar do resto da página */
+    padding: 20px;                /* Espaçamento interno para o conteúdo não tocar nas bordas */
+    border-radius: 8px;           /* Arredondamento suave das pontas do bloco */
+    border: 1px solid #ddd;       /* Uma borda fina cinza para dar definição */
+    margin: 20px 0;               /* Espaço de 20px acima e abaixo do bloco */
+    text-align: center;           /* Centraliza o título e o texto de apoio */
+}
+
+/* Estilo do título H3 dentro da seção de consultas */
+.consultas-externas h3 {
+    color: #333;                  /* Tom de cinza escuro para melhor leitura */
+    margin-bottom: 10px;          /* Espaço entre o título e o parágrafo abaixo */
+}
+
+/* Container que segura os botões (Links) */
+.botoes-consulta {
+    display: flex;                /* Ativa o modo flexível para colocar botões lado a lado */
+    gap: 15px;                    /* Cria um espaço de 15px entre um botão e outro */
+    justify-content: center;      /* Centraliza os botões horizontalmente */
+    flex-wrap: wrap;              /* Se a tela for pequena, os botões quebram para a linha de baixo */
+    margin-top: 15px;             /* Espaço entre o texto e os botões */
+}
+
+/* Configuração geral para todos os botões desta seção */
+.botoes-consulta a {
+    text-decoration: none;        /* Remove o sublinhado padrão de links */
+    padding: 12px 20px;           /* Tamanho do botão (espaço interno) */
+    border-radius: 5px;           /* Deixa as pontas do botão levemente redondas */
+    font-weight: bold;            /* Deixa o texto em negrito */
+    font-size: 14px;              /* Define um tamanho de letra legível */
+    transition: all 0.3s ease;    /* Faz qualquer mudança (cor, tamanho) ser suave (0.3 segundos) */
+    display: flex;                /* Permite alinhar ícones e texto dentro do botão se necessário */
+    align-items: center;          /* Centraliza o conteúdo do botão verticalmente */
+}
+
+/* --- Estilo específico do Botão Tabela FIPE (Azul) --- */
+.btn-fipe {
+    background-color: #0056b3;    /* Azul padrão para remeter a confiança/institucional */
+    color: white;                 /* Texto branco para alto contraste */
+}
+
+/* Efeito ao passar o mouse no botão Fipe */
+.btn-fipe:hover {
+    background-color: #004494;    /* Escurece o azul para indicar o clique */
+    transform: translateY(-2px);  /* Faz o botão "subir" 2 pixels (efeito de profundidade) */
+}
+
+/* --- Estilo específico do Botão DETRAN (Laranja) --- */
+.btn-detran {
+    background-color: #e67e22;    /* Laranja para destacar como "Ação/Alerta" */
+    color: white;                 /* Texto branco */
+}
+
+/* Efeito ao passar o mouse no botão Detran */
+.btn-detran:hover {
+    background-color: #d35400;    /* Escurece o laranja ao passar o mouse */
+    transform: translateY(-2px);  /* Faz o botão "subir" 2 pixels */
+}
+
+/* ============================================================
+   SEÇÃO DE BLOG (DICAS E NOVIDADES)
+   ============================================================ */
+
+/* Container Principal - Garante que a seção ocupe a largura total e centralize o conteúdo */
+.sessao-blog-completa {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza tudo horizontalmente */
+    padding: 60px 0;
+    background-color: #ffffff;
+    clear: both; /* Evita que elementos flutuantes de cima atrapalhem */
+}
+
+.titulo-sessao-blog {
+    font-size: 32px;
+    color: #1a2a3a;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+/* Grade de Cards - Alinha os cards lado a lado */
+.grade-cards {
+    display: flex;
+    justify-content: center; /* Centraliza os cards no meio da tela */
+    flex-wrap: wrap;         /* Faz os cards pularem de linha no celular */
+    gap: 30px;               /* Espaço entre os cards */
+    max-width: 1200px;       /* Não deixa os cards espalharem demais em telas gigantes */
+    width: 90%;              /* Margem de segurança nas laterais */
+    margin-bottom: 60px;
+}
+
+/* Estilo do Card Individual */
+.card-artigo {
+    background: #fff;
+    width: 350px;
+    border-radius: 12px;
+    border: 1px solid #eee;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease;
+}
+
+.card-artigo:hover {
+    transform: translateY(-10px); /* Efeito de flutuar ao passar o mouse */
+}
+
+.card-artigo img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover; /* Garante que a imagem não fique esticada */
+    background-color: #ddd;
+}
+
+.corpo-card {
+    padding: 25px;
+}
+
+.corpo-card h3 {
+    font-size: 20px;
+    margin: 0 0 15px;
+    color: #1a2a3a;
+}
+
+.corpo-card p {
+    font-size: 15px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.corpo-card a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* ============================================================
+   NEWSLETTER
+   ============================================================ */
+.sessao-newsletter {
+    width: 100%;
+    background-color: #f8f9fa;
+    padding: 50px 20px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.formulario-newsletter {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 25px;
+    flex-wrap: wrap;
+}
+
+.formulario-newsletter input {
+    padding: 12px 15px;
+    width: 300px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+.formulario-newsletter button {
+    padding: 12px 25px;
+    background-color: #1a2a3a;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.formulario-newsletter button:hover {
+    background-color: #2c3e50;
+}
