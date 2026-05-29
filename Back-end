@@ -1,0 +1,169 @@
+from flask import Flask, render_template, request, redirect, url_for, session, flash, send_from_directory
+import mysql.connector
+import hashlib
+import os
+
+app = Flask(__name__)
+app.secret_key = 'sua_chave_secreta_muito_segura_aqui'
+
+# BANCO DE DADOS
+def conectar_banco():
+    return mysql.connector.connect(
+        host='localhost',
+        database='buscador_automoveis',
+        user='root',
+        password=''  # ajuste se tiver senha
+    )
+
+def hash_senha(senha):
+    return hashlib.sha256(senha.encode()).hexdigest()
+
+# Rota para CSS
+@app.route('/style.css')
+def style_css():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'style.css')
+
+# Rota para imagens
+@app.route('/imagens/<path:filename>')
+def servir_imagens(filename):
+    return send_from_directory(os.path.join(app.root_path, 'static', 'Imagens'), filename)
+
+# ROTAS DE PÁGINAS
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/faq')
+def faq():
+    return render_template('faq.html')
+
+@app.route('/artigo1')
+def artigo1():
+    return render_template('artigo1.html')
+
+@app.route('/artigo2')
+def artigo2():
+    return render_template('artigo2.html')
+
+@app.route('/fusca')
+def fusca():
+    return render_template('fusca.html')
+
+@app.route('/gol')
+def gol():
+    return render_template('gol.html')
+
+@app.route('/honda_civic')
+def honda_civic():
+    return render_template('honda_civic.html')
+
+@app.route('/comprar')
+def comprar():
+    return render_template('comprar.html')
+
+@app.route('/cadastro', methods=['GET', 'POST'])
+def cadastro():
+    if request.method == 'POST':
+        nome = request.form['nome']
+        email = request.form['email']
+        senha = hash_senha(request.form['senha'])
+
+        con = conectar_banco()
+        cursor = con.cursor()
+        try:
+            cursor.execute("INSERT INTO usuarios (nome, email, senha) VALUES (%s, %s, %s)", (nome, email, senha))
+            con.commit()
+            flash('Cadastro realizado com sucesso! Faça seu login.', 'success')
+            return redirect(url_for('tela_login'))
+        except Exception as e:
+            flash('Erro ao cadastrar. O e-mail informado já pode estar em uso.', 'danger')
+            return redirect(url_for('cadastro'))
+        finally:
+            cursor.close()
+            con.close()
+    return render_template('cadastro_inicial.html')
+
+@app.route('/login', methods=['GET'])
+def tela_login():
+    return render_template('login.html')
+
+@app.route('/login', methods=['POST'])
+def processar_login():
+    email = request.form.get('email', '').strip()
+    senha = request.form.get('senha', '')
+
+    con = conectar_banco()
+    cursor = con.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM usuarios WHERE email=%s AND senha=%s", (email, hash_senha(senha)))
+    usuario = cursor.fetchone()
+    cursor.close()
+    con.close()
+
+    if usuario:
+        session['usuario_id'] = usuario['id']
+        session['usuario_nome'] = usuario['nome']
+        flash(f"Bem-vindo, {usuario['nome']}!")
+        return redirect(url_for('index'))
+    else:
+        flash('Conta não cadastrada ou senha incorreta.', 'danger')
+        return redirect(url_for('tela_login'))
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    flash('Sessão encerrada.')
+    return redirect(url_for('index'))
+
+@app.route('/cadastro_whatsapp', methods=['GET', 'POST'])
+def cadastro_whatsapp():
+    if request.method == 'POST':
+        nome = request.form['nome']
+        tel = request.form.get('tel')
+
+        con = conectar_banco()
+        cursor = con.cursor()
+        cursor.execute("INSERT INTO cadastro_whatsapp (nome_completo, whatsapp) VALUES (%s, %s)", (nome, tel))
+        con.commit()
+        cursor.close()
+        con.close()
+
+        flash('Inscrição realizada! Você receberá as novidades no seu WhatsApp.', 'success')
+        return redirect(url_for('index'))
+
+    return render_template('cadastro_WhatsApp.html')
+
+
+
+@app.route('/buscar', methods=['GET'])
+def buscar():
+
+    marca = request.args.get('marca', '')
+    modelo = request.args.get('modelo', '')
+
+    con = conectar_banco()
+
+    cursor = con.cursor(dictionary=True)
+
+    query = """
+        SELECT * FROM veiculos
+        WHERE marca LIKE %s
+        AND modelo LIKE %s
+    """
+
+    cursor.execute(
+        query,
+        (f"%{marca}%", f"%{modelo}%")
+    )
+
+    resultados = cursor.fetchall()
+
+    cursor.close()
+    con.close()
+
+    return render_template(
+        'comprar.html',
+        veiculos=resultados
+    )
+
+if __name__ == '__main__':
+    app.run(debug=True)
